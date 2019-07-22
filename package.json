@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "gcloud beta functions deploy hunt-notification --trigger-resource notification --trigger-event google.pubsub.topic.publish --project hunt-bot",
+    "exec:remote": "gcloud beta pubsub topics publish notification --message hello --project hunt-bot",
+    "exec:local": "node integration/index.js"
   },
   "keywords": [],
   "author": "",
