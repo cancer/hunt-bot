@@ -1,15 +1,16 @@
-const { DateTime } = require('luxon');
+const { DateTime, FixedOffsetZone } = require('luxon');
 const fetch = require('node-fetch');
 const fetchData = require('./fetch-data');
 
-exports.main = () => {
+module.exports.main = () => {
   Promise.resolve()
     .then(() => fetchData())
     .then(res => res.filter(v => {
       return v.mob.rank === 'F' && v.mob.category === 'v5'
     }))
     .then(res => res.map(v => {
-      const date = DateTime.fromMillis(v.time);
+      const zone = FixedOffsetZone.instance(-900);
+      const date = DateTime.fromMillis(v.time, { zone });
       return {
         mob: v.mob.name_ja,
         instance: v.instance,
@@ -44,16 +45,15 @@ exports.main = () => {
       return `${v.key}  ${v.value.diff}時間前（${v.value.dateTime}）`;
     }).join('\n'))
     .then(res => {
-      fetch('https://hooks.slack.com/services/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', {
+      return fetch('https://hooks.slack.com/services/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', {
         method: 'POST',
         body: JSON.stringify({
           text: `${res}
 https://ffxiv-the-hunt.net/ultima`,
         })
       })
-        .then(() => console.log('success'))
-        .catch(e => console.error(e))
     })
+    .then(() => console.log('success'))
     .catch(e => console.error(e))
 
 
