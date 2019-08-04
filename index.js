@@ -54,7 +54,17 @@ https://ffxiv-the-hunt.net/ultima`,
       })
     })
     .then(() => console.log('success'))
-    .catch(e => console.error(e))
+    .catch(e => {
+      console.error(e)
+      return fetch('https://hooks.slack.com/services/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', {
+        method: 'POST',
+        body: JSON.stringify({
+          text: `!!!ERROR!!!
+\`${e}\`
+`
+        })
+      })
+    })
 
 
   process.on('unhandledRejection', () => process.exit())
