@@ -6,7 +6,7 @@ module.exports.main = () => {
   Promise.resolve()
     .then(() => fetchData())
     .then(res => res.filter(v => {
-      return v.mob.rank === 'F' && v.mob.category === 'v5'
+      return v.mob && v.mob.rank === 'F' && v.mob.category === 'v5'
     }))
     .then(res => res.map(v => {
       const zone = FixedOffsetZone.instance(-900);
