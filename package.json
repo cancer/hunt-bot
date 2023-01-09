@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "luxon": "1.17.1",
+    "luxon": "2.5.2",
     "node-fetch": "2.6.0",
     "puppeteer": "1.18.1"
   }
